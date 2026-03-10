@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ticketing + To-Do</title>
+  <script type="module" crossorigin src="/assets/index-a7944a46.js"></script>
+  <link rel="stylesheet" href="/assets/index-0d1d28dc.css">
+</head>
+
+<body>
+  <div id="root"></div>
+  
+  <script>
+    console.log("Testing POST to API...");
+    fetch('http://localhost:8000/tickets/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title: "Browser Test Ticket", priority: "high", status: "todo" })
+    }).then(res => res.json())
+      .then(data => console.log("Success:", data))
+      .catch(err => console.error("Fetch Error:", err));
+  </script>
+</body>
+
+</html>

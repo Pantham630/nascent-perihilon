@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: ticketing_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: ticketing
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+
+  backend:
+    build:
+      context: ./backend
+    container_name: ticketing_backend
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://postgres:password@db:5432/ticketing
+      # --- SMTP Email Notification Config ---
+      # Fill in your SMTP credentials to enable deadline email alerts.
+      # Works with Gmail (use App Password), SendGrid, Outlook, Mailgun, etc.
+      SMTP_HOST: "" # e.g. smtp.gmail.com
+      SMTP_PORT: "587"
+      SMTP_USER: "" # e.g. yourname@gmail.com
+      SMTP_PASS: "" # App password or SMTP key
+      SMTP_FROM: "" # Sender address shown in the email
+    depends_on:
+      - db
+    restart: always
+    volumes:
+      - ./backend:/app
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: ticketing_frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    restart: always
+
+volumes:
+  postgres_data:

@@ -1,0 +1,100 @@
+    util.preloaded.orm_persistence.save_obj(
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/persistence.py", line 1233, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+    return meth(
+           ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedColumn) column "user_id" of relation "activity_logs" does not exist
+LINE 1: INSERT INTO activity_logs (project_id, task_id, user_id, act...
+                                                        ^
+
+[SQL: INSERT INTO activity_logs (project_id, task_id, user_id, action, meta) VALUES (%(project_id)s, %(task_id)s, %(user_id)s, %(action)s, %(meta)s::JSON) RETURNING activity_logs.id, activity_logs.created_at]
+[parameters: {'project_id': 7, 'task_id': None, 'user_id': None, 'action': '🚀 Project created: Test Project 2', 'meta': 'null'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+INFO:     172.18.0.1:35716 - "GET /tickets/ HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:35732 - "GET /tickets/urgent HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:35748 - "GET /tickets/dashboard HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:35718 - "GET /notifications/2 HTTP/1.1" 200 OK
+INFO:     172.18.0.1:35754 - "GET /projects/ HTTP/1.1" 200 OK
+INFO:     172.18.0.1:41280 - "GET /tickets/ HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:41302 - "GET /tickets/urgent HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:41268 - "GET /notifications/2 HTTP/1.1" 200 OK
+INFO:     172.18.0.1:41312 - "GET /tickets/dashboard HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:41296 - "GET /projects/ HTTP/1.1" 200 OK
+INFO:     172.18.0.1:46624 - "GET /tickets/ HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:46622 - "GET /notifications/2 HTTP/1.1" 200 OK
+INFO:     172.18.0.1:46646 - "GET /tickets/urgent HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:46650 - "GET /tickets/dashboard HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:46636 - "GET /projects/ HTTP/1.1" 200 OK
+INFO:     172.18.0.1:37018 - "GET /tickets/ HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:37034 - "GET /tickets/urgent HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:37046 - "GET /tickets/dashboard HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:37024 - "GET /notifications/2 HTTP/1.1" 200 OK
+INFO:     172.18.0.1:37050 - "GET /projects/ HTTP/1.1" 200 OK
+INFO:     172.18.0.1:59018 - "GET /tickets/ HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:59004 - "OPTIONS /notifications/2 HTTP/1.1" 200 OK
+INFO:     172.18.0.1:59020 - "OPTIONS /projects/ HTTP/1.1" 200 OK
+INFO:     172.18.0.1:59026 - "GET /tickets/urgent HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:59028 - "GET /tickets/dashboard HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:59020 - "GET /notifications/2 HTTP/1.1" 200 OK
+INFO:     172.18.0.1:59018 - "GET /projects/ HTTP/1.1" 200 OK
+INFO:     172.18.0.1:51870 - "GET /tickets/ HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:51888 - "GET /tickets/urgent HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:51890 - "GET /tickets/dashboard HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:51868 - "GET /notifications/2 HTTP/1.1" 200 OK
+INFO:     172.18.0.1:51878 - "GET /projects/ HTTP/1.1" 200 OK
+INFO:     172.18.0.1:46634 - "GET /tickets/ HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:46660 - "GET /tickets/urgent HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:46674 - "GET /tickets/dashboard HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:46624 - "GET /notifications/2 HTTP/1.1" 200 OK
+INFO:     172.18.0.1:46648 - "GET /projects/ HTTP/1.1" 200 OK
+INFO:     172.18.0.1:50724 - "GET /tickets/ HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:50750 - "GET /tickets/urgent HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:50764 - "GET /tickets/dashboard HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:50736 - "GET /notifications/2 HTTP/1.1" 200 OK
+INFO:     172.18.0.1:50776 - "GET /projects/ HTTP/1.1" 200 OK
+INFO:     172.18.0.1:52542 - "GET /tickets/ HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:52558 - "GET /tickets/urgent HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:52572 - "GET /tickets/dashboard HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:52548 - "GET /notifications/2 HTTP/1.1" 200 OK
+INFO:     172.18.0.1:52580 - "GET /projects/ HTTP/1.1" 200 OK
+INFO:     172.18.0.1:51408 - "GET /tickets/ HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:51426 - "GET /tickets/urgent HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:51442 - "GET /tickets/dashboard HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:51406 - "GET /notifications/2 HTTP/1.1" 200 OK
+INFO:     172.18.0.1:51422 - "GET /projects/ HTTP/1.1" 200 OK
+INFO:     172.18.0.1:49046 - "GET /tickets/ HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:49068 - "GET /tickets/urgent HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:49076 - "GET /tickets/dashboard HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:49034 - "GET /notifications/2 HTTP/1.1" 200 OK
+INFO:     172.18.0.1:49060 - "GET /projects/ HTTP/1.1" 200 OK
+INFO:     172.18.0.1:52236 - "GET /tickets/ HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:52262 - "GET /tickets/urgent HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:52274 - "GET /tickets/dashboard HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:52224 - "GET /notifications/2 HTTP/1.1" 200 OK
+INFO:     172.18.0.1:52246 - "GET /projects/ HTTP/1.1" 200 OK
+INFO:     172.18.0.1:35588 - "GET /tickets/ HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:35608 - "GET /tickets/urgent HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:35616 - "GET /tickets/dashboard HTTP/1.1" 404 Not Found
+INFO:     172.18.0.1:35574 - "GET /notifications/2 HTTP/1.1" 200 OK
+INFO:     172.18.0.1:35594 - "GET /projects/ HTTP/1.1" 200 OK
