@@ -1,0 +1,10 @@
+﻿     name     |        email        |  role  
+--------------+---------------------+--------
+ Alex Johnson | alex@company.com    | admin
+ Sarah Chen   | sarah@company.com   | pm
+ Marco Rivera | marco@company.com   | member
+ Priya Patel  | priya@company.com   | member
+ Tom Acme     | tom@acme-client.com | client
+ jaswanth     | jaswant@gmail.com   | member
+(6 rows)
+

@@ -1,0 +1,28 @@
+
+> launchpad@1.0.0 build
+> vite build
+
+vite v4.5.14 building for production...
+transforming...
+✓ 2456 modules transformed.
+✓ built in 6.99s
+"Paperplane" is not exported by "node_modules/lucide-react/dist/esm/lucide-react.js", imported by "src/components/DiscussionBoard.jsx".
+file: C:/Users/Pavan Kumar C/.gemini/antigravity/playground/nascent-perihelion/frontend/src/components/DiscussionBoard.jsx:6:33
+4:     MessageSquare, Send, Plus, ChevronDown, ChevronUp,
+5:     Reply, AtSign, Paperclip, File, X, Globe, Lock,
+6:     Clock, MoreHorizontal, User, Paperplane
+                                    ^
+7: } from 'lucide-react'
+8: import { useApp } from '../stores/AppContext'
+error during build:
+RollupError: "Paperplane" is not exported by "node_modules/lucide-react/dist/esm/lucide-react.js", imported by "src/components/DiscussionBoard.jsx".
+    at error (file:///C:/Users/Pavan%20Kumar%20C/.gemini/antigravity/playground/nascent-perihelion/frontend/node_modules/rollup/dist/es/shared/node-entry.js:2287:30)
+    at Module.error (file:///C:/Users/Pavan%20Kumar%20C/.gemini/antigravity/playground/nascent-perihelion/frontend/node_modules/rollup/dist/es/shared/node-entry.js:13751:16)
+    at Module.traceVariable (file:///C:/Users/Pavan%20Kumar%20C/.gemini/antigravity/playground/nascent-perihelion/frontend/node_modules/rollup/dist/es/shared/node-entry.js:14181:29)
+    at ModuleScope.findVariable (file:///C:/Users/Pavan%20Kumar%20C/.gemini/antigravity/playground/nascent-perihelion/frontend/node_modules/rollup/dist/es/shared/node-entry.js:12621:39)
+    at FunctionScope.findVariable (file:///C:/Users/Pavan%20Kumar%20C/.gemini/antigravity/playground/nascent-perihelion/frontend/node_modules/rollup/dist/es/shared/node-entry.js:7130:38)
+    at ChildScope.findVariable (file:///C:/Users/Pavan%20Kumar%20C/.gemini/antigravity/playground/nascent-perihelion/frontend/node_modules/rollup/dist/es/shared/node-entry.js:7130:38)
+    at Identifier.bind (file:///C:/Users/Pavan%20Kumar%20C/.gemini/antigravity/playground/nascent-perihelion/frontend/node_modules/rollup/dist/es/shared/node-entry.js:8325:40)
+    at CallExpression.bind (file:///C:/Users/Pavan%20Kumar%20C/.gemini/antigravity/playground/nascent-perihelion/frontend/node_modules/rollup/dist/es/shared/node-entry.js:5894:28)
+    at CallExpression.bind (file:///C:/Users/Pavan%20Kumar%20C/.gemini/antigravity/playground/nascent-perihelion/frontend/node_modules/rollup/dist/es/shared/node-entry.js:9896:15)
+    at Property.bind (file:///C:/Users/Pavan%20Kumar%20C/.gemini/antigravity/playground/nascent-perihelion/frontend/node_modules/rollup/dist/es/shared/node-entry.js:5898:23)

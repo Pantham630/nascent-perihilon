@@ -3,7 +3,7 @@ import React from 'react'
 // ─── Avatar ────────────────────────────────────────────────────
 export function Avatar({ user, size = 'md' }) {
     const sizes = { sm: 'w-7 h-7 text-xs', md: 'w-9 h-9 text-sm', lg: 'w-12 h-12 text-base' }
-    const initials = user?.name?.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase() || '?'
+    const initials = (user?.name || "").split(' ').map(n => n?.[0] || "").slice(0, 2).join('').toUpperCase() || '?'
     const colors = ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444', '#06b6d4']
     const color = colors[(user?.id || 0) % colors.length]
     if (user?.avatar_url) {

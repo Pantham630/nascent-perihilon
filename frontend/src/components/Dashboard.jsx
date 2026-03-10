@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import * as api from '../lib/api'
 import { StatCard, Card, SectionHeader, Badge, HealthDot, ProgressBar, Avatar, Button, Spinner, EmptyState } from './ui/index.jsx'
 import { useApp } from '../stores/AppContext'
+import { motion } from 'framer-motion'
 import {
     PieChart, Pie, Cell, ResponsiveContainer, Tooltip as RechartsTooltip,
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend

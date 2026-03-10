@@ -32,6 +32,21 @@ class UserResponse(UserBase):
         from_attributes = True
 
 
+class UserLogin(BaseModel):
+    email: str
+    password: str
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    email: Optional[str] = None
+    user_id: Optional[int] = None
+
+
 # ─────────────────────── Templates ───────────────────────
 class TemplateBase(BaseModel):
     name: str
@@ -228,6 +243,7 @@ class DocumentResponse(BaseModel):
 # ─────────────────────── Threads ───────────────────────
 class ThreadCreate(BaseModel):
     title: str
+    body: Optional[str] = None
     created_by: Optional[int] = None
 
 
@@ -235,6 +251,7 @@ class ThreadResponse(BaseModel):
     id: int
     project_id: int
     title: str
+    body: Optional[str] = None
     created_by: Optional[int] = None
     created_at: datetime
     comments: List[CommentResponse] = []

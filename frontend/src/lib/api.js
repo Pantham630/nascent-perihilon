@@ -1,10 +1,21 @@
 const API = 'http://localhost:8000'
 
 async function request(path, options = {}) {
+    const token = localStorage.getItem('launchpad_token')
+    const headers = {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+    if (token) headers['Authorization'] = `Bearer ${token}`
+
     const res = await fetch(`${API}${path}`, {
-        headers: { 'Content-Type': 'application/json', ...options.headers },
+        headers,
         ...options,
     })
+    if (res.status === 401) {
+        localStorage.removeItem('launchpad_token')
+        window.dispatchEvent(new CustomEvent('auth_fail'))
+    }
     if (!res.ok) {
         const err = await res.json().catch(() => ({ detail: res.statusText }))
         throw new Error(err.detail || 'API Error')
@@ -13,6 +24,8 @@ async function request(path, options = {}) {
 }
 
 // ─── Auth / Users ──────────────────────────────────────────────────
+export const login = (email, password) => request('/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) })
+export const getMe = () => request('/auth/me')
 export const getUsers = () => request('/auth/users')
 export const createUser = (data) => request('/auth/users', { method: 'POST', body: JSON.stringify(data) })
 export const updateUser = (id, data) => request(`/auth/users/${id}`, { method: 'PUT', body: JSON.stringify(data) })

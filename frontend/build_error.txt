@@ -1,0 +1,26 @@
+
+> launchpad@1.0.0 build
+> vite build
+
+vite v4.5.14 building for production...
+transforming...
+✓ 4 modules transformed.
+✓ built in 840ms
+[vite]: Rollup failed to resolve import "framer-motion" from "C:/Users/Pavan Kumar C/.gemini/antigravity/playground/nascent-perihelion/frontend/src/App.jsx".
+This is most likely unintended because it can break your application at runtime.
+If you do want to externalize this module explicitly add it to
+`build.rollupOptions.external`
+error during build:
+Error: [vite]: Rollup failed to resolve import "framer-motion" from "C:/Users/Pavan Kumar C/.gemini/antigravity/playground/nascent-perihelion/frontend/src/App.jsx".
+This is most likely unintended because it can break your application at runtime.
+If you do want to externalize this module explicitly add it to
+`build.rollupOptions.external`
+    at viteWarn (file:///C:/Users/Pavan%20Kumar%20C/.gemini/antigravity/playground/nascent-perihelion/frontend/node_modules/vite/dist/node/chunks/dep-827b23df.js:48272:27)
+    at onwarn (file:///C:/Users/Pavan%20Kumar%20C/.gemini/antigravity/playground/nascent-perihelion/frontend/node_modules/@vitejs/plugin-react/dist/index.js:90:7)
+    at onRollupWarning (file:///C:/Users/Pavan%20Kumar%20C/.gemini/antigravity/playground/nascent-perihelion/frontend/node_modules/vite/dist/node/chunks/dep-827b23df.js:48301:9)
+    at onwarn (file:///C:/Users/Pavan%20Kumar%20C/.gemini/antigravity/playground/nascent-perihelion/frontend/node_modules/vite/dist/node/chunks/dep-827b23df.js:48032:13)
+    at file:///C:/Users/Pavan%20Kumar%20C/.gemini/antigravity/playground/nascent-perihelion/frontend/node_modules/rollup/dist/es/shared/node-entry.js:24305:13
+    at Object.logger [as onLog] (file:///C:/Users/Pavan%20Kumar%20C/.gemini/antigravity/playground/nascent-perihelion/frontend/node_modules/rollup/dist/es/shared/node-entry.js:25979:9)
+    at ModuleLoader.handleInvalidResolvedId (file:///C:/Users/Pavan%20Kumar%20C/.gemini/antigravity/playground/nascent-perihelion/frontend/node_modules/rollup/dist/es/shared/node-entry.js:24891:26)
+    at file:///C:/Users/Pavan%20Kumar%20C/.gemini/antigravity/playground/nascent-perihelion/frontend/node_modules/rollup/dist/es/shared/node-entry.js:24851:26
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)

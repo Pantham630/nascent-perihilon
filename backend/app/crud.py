@@ -1,10 +1,34 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import text, func
 from datetime import datetime, timedelta, timezone
-from . import models, schemas
+from . import models, schemas, auth_utils
 
+
+import re
 
 # ─────────────────────── Helpers ───────────────────────
+def _handle_mentions(db: Session, body: str, author_id: int, project_id: int = None, task_id: int = None, thread_id: int = None):
+    """Scan body for @[Name] and create notifications."""
+    if not body: return
+    # Find all occurrences of @[Name]
+    mentions = re.findall(r"@\[([^\]]+)\]", body)
+    if not mentions: return
+
+    for name in mentions:
+        # Find user by name
+        user = db.query(models.User).filter(models.User.name == name, models.User.active == True).first()
+        if user and user.id != author_id:
+            # Create notification
+            db.add(models.Notification(
+                user_id=user.id,
+                type="mention",
+                title="You were mentioned",
+                body=f"You were mentioned in a discussion.",
+                link=f"/projects/{project_id}" if project_id else f"/tasks/{task_id}" if task_id else "/",
+                read=False
+            ))
+            db.commit()
+
 def _log(db: Session, action: str, project_id=None, task_id=None, user_id=None, meta=None):
     db.add(models.ActivityLog(
         action=action, project_id=project_id, task_id=task_id,
@@ -24,14 +48,16 @@ def seed_users(db: Session):
     if db.query(models.User).count() > 0:
         return
     defaults = [
-        {"name": "Alex Johnson", "email": "alex@company.com", "role": "admin"},
-        {"name": "Sarah Chen", "email": "sarah@company.com", "role": "pm"},
-        {"name": "Marco Rivera", "email": "marco@company.com", "role": "member"},
-        {"name": "Priya Patel", "email": "priya@company.com", "role": "member"},
-        {"name": "Tom Acme", "email": "tom@acme-client.com", "role": "client"},
+        {"name": "Alex Johnson", "email": "alex@company.com", "role": "admin", "password": "password"},
+        {"name": "Sarah Chen", "email": "sarah@company.com", "role": "pm", "password": "password"},
+        {"name": "Marco Rivera", "email": "marco@company.com", "role": "member", "password": "password"},
+        {"name": "Priya Patel", "email": "priya@company.com", "role": "member", "password": "password"},
+        {"name": "Tom Acme", "email": "tom@acme-client.com", "role": "client", "password": "password"},
     ]
     for u in defaults:
-        db.add(models.User(**u))
+        pwd = u.pop("password")
+        db_user = models.User(**u, hashed_password=auth_utils.hash_password(pwd))
+        db.add(db_user)
     db.commit()
 
 
@@ -64,12 +90,28 @@ def get_user(db: Session, user_id: int):
     return db.query(models.User).filter(models.User.id == user_id).first()
 
 
-def create_user(db: Session, user: schemas.UserCreate):
-    db_user = models.User(**user.model_dump())
+def create_user(db: Session, user: schemas.UserCreate, password: str = "password"):
+    db_user = models.User(
+        **user.model_dump(),
+        hashed_password=auth_utils.hash_password(password)
+    )
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
     return db_user
+
+
+def get_user_by_email(db: Session, email: str):
+    return db.query(models.User).filter(models.User.email == email).first()
+
+
+def authenticate_user(db: Session, email: str, password: str):
+    user = get_user_by_email(db, email)
+    if not user:
+        return False
+    if not auth_utils.verify_password(password, user.hashed_password):
+        return False
+    return user
 
 
 def update_user(db: Session, user_id: int, user: schemas.UserUpdate):
@@ -411,12 +453,22 @@ def create_comment(db: Session, task_id: int = None, thread_id: int = None, comm
         author_name=comment.author_name
     )
     db.add(db_comment)
+    db.commit()
+    db.refresh(db_comment)
+    
+    # Handle mentions
+    proj_id = None
     if task_id:
         task = get_task(db, task_id)
         if task:
+            proj_id = task.project_id
             _log(db, f"💬 Comment added", project_id=task.project_id, task_id=task_id, user_id=comment.author_id)
+    elif thread_id:
+        thread = db.query(models.Thread).filter(models.Thread.id == thread_id).first()
+        if thread: proj_id = thread.project_id
+
+    _handle_mentions(db, comment.body, comment.author_id, project_id=proj_id, task_id=task_id, thread_id=thread_id)
     db.commit()
-    db.refresh(db_comment)
     return db_comment
 
 
@@ -439,6 +491,11 @@ def create_thread(db: Session, project_id: int, thread: schemas.ThreadCreate):
     _log(db, f"💬 Discussion started: {thread.title}", project_id=project_id, user_id=thread.created_by)
     db.commit()
     db.refresh(db_thread)
+    
+    # Handle mentions in thread body
+    if thread.body:
+        _handle_mentions(db, thread.body, thread.created_by, project_id=project_id, thread_id=db_thread.id)
+        db.commit()
     return db_thread
 
 

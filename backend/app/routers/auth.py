@@ -2,10 +2,36 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
 from ..database import get_db
-from .. import crud, schemas
+from .. import crud, schemas, auth_utils
+from fastapi.security import OAuth2PasswordBearer
 
 router = APIRouter(prefix="/auth", tags=["auth"])
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 
+def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    payload = auth_utils.decode_access_token(token)
+    if not payload:
+        raise HTTPException(status_code=401, detail="Invalid authentication credentials")
+    user_id = payload.get("user_id")
+    if not user_id:
+        raise HTTPException(status_code=401, detail="Invalid token payload")
+    user = crud.get_user(db, user_id=user_id)
+    if not user:
+        raise HTTPException(status_code=401, detail="User not found")
+    return user
+
+@router.post("/login", response_model=schemas.Token)
+def login(login_data: schemas.UserLogin, db: Session = Depends(get_db)):
+    user = crud.authenticate_user(db, email=login_data.email, password=login_data.password)
+    if not user:
+        raise HTTPException(status_code=401, detail="Incorrect email or password")
+    
+    access_token = auth_utils.create_access_token(data={"user_id": user.id, "email": user.email})
+    return {"access_token": access_token, "token_type": "bearer"}
+
+@router.get("/me", response_model=schemas.UserResponse)
+def read_users_me(current_user: schemas.UserResponse = Depends(get_current_user)):
+    return current_user
 
 @router.get("/users", response_model=List[schemas.UserResponse])
 def list_users(db: Session = Depends(get_db)):

@@ -1,0 +1,15 @@
+
+> launchpad@1.0.0 build
+> vite build
+
+vite v4.5.14 building for production...
+transforming...
+✓ 1498 modules transformed.
+✓ built in 5.94s
+Could not resolve "./ui/Avatar" from "src/components/DiscussionBoard.jsx"
+file: C:/Users/Pavan Kumar C/.gemini/antigravity/playground/nascent-perihelion/frontend/src/components/DiscussionBoard.jsx
+error during build:
+RollupError: Could not resolve "./ui/Avatar" from "src/components/DiscussionBoard.jsx"
+    at error (file:///C:/Users/Pavan%20Kumar%20C/.gemini/antigravity/playground/nascent-perihelion/frontend/node_modules/rollup/dist/es/shared/node-entry.js:2287:30)
+    at ModuleLoader.handleInvalidResolvedId (file:///C:/Users/Pavan%20Kumar%20C/.gemini/antigravity/playground/nascent-perihelion/frontend/node_modules/rollup/dist/es/shared/node-entry.js:24889:24)
+    at file:///C:/Users/Pavan%20Kumar%20C/.gemini/antigravity/playground/nascent-perihelion/frontend/node_modules/rollup/dist/es/shared/node-entry.js:24851:26
